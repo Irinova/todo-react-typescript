@@ -1,14 +1,16 @@
-# Todo list (React + typeScript)
+# Todo list (React + TypeScript)
 
-Для удобства каждый шаг сделан отдельной веткой:
-
-##### Шаг 1. 
+Перед началом работы необходимо установить все зависимости:
 
 ```
-git checkout step-1
+npm install
 ```
-Добавление компонентов NewTask и TasksList.
 
+Запустить проект:
+
+```
+npm start
+```
 
 
 
