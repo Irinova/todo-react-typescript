@@ -10,8 +10,8 @@ const TasksList: React.FC<Props> = ({tasks}) => {
     return (
         <>
             <ul>
-                {tasks.map(task=>(
-                    <li>
+                {tasks.map((task,i)=>(
+                    <li key={i}>
                         {task.name}
                     </li>
                 ))}

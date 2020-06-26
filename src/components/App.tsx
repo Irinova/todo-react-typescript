@@ -4,30 +4,37 @@ import {useState} from "react";
 import NewTask from "./NewTask";
 import TasksList from "./TasksList";
 
-import {Task} from "../types/taskType";
+import {TaskName, Tasks} from "../types/taskType";
 
 
 const App = () => {
-    const [newTask, editTask] = useState<string>('');
-    const [tasks, setTasks] = useState<Array<Task>>([]);
+    const [newTaskName, setTaskName] = useState<TaskName>('');
+    const [tasks, setTasks] = useState<Tasks>([]);
 
-    const addTask = (event: React.FormEvent<HTMLFormElement>) => {
+    const addTask = (event: React.FormEvent<HTMLFormElement>, task: TaskName) => {
         event.preventDefault();
+        setTasks([...tasks, {
+            name: task,
+            isDone: false
+        }]);
+        setTaskName('');
     }
 
     const changeTask = (event: React.ChangeEvent<HTMLInputElement>) => {
-        editTask(event.target.value);
+        setTaskName(event.target.value);
     }
 
     return (
         <>
             <div>
                 <NewTask
-                    task={newTask}
+                    taskName={newTaskName}
                     addTask={addTask}
                     changeTask={changeTask}
                 />
-                <TasksList tasks={tasks} />
+                <TasksList
+                    tasks={tasks}
+                />
             </div>
         </>
     )
