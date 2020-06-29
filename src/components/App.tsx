@@ -7,7 +7,7 @@ import TasksList from "./TasksList";
 import {TaskName, Task, Tasks} from "../types/taskType";
 
 
-const App = () => {
+const App:  React.FC = () => {
     const [newTaskName, setTaskName] = useState<TaskName>('');
     const [tasks, setTasks] = useState<Tasks>([]);
 
@@ -38,6 +38,9 @@ const App = () => {
     return (
         <>
             <div>
+                <h1>
+                    React + TypeScript
+                </h1>
                 <NewTask
                     taskName={newTaskName}
                     addTask={addTask}

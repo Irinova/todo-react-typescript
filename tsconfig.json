@@ -10,7 +10,7 @@
       "dom"
     ],
     "removeComments": true,
-    "allowSyntheticDefaultImports": false,
+    "allowSyntheticDefaultImports": true,
     "jsx": "react",
     "allowJs": true,
     "baseUrl": "./",
