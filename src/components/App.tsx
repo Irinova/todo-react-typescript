@@ -4,7 +4,7 @@ import {useState} from "react";
 import NewTask from "./NewTask";
 import TasksList from "./TasksList";
 
-import {TaskName, Tasks} from "../types/taskType";
+import {TaskName, Task, Tasks} from "../types/taskType";
 
 
 const App = () => {
@@ -24,6 +24,17 @@ const App = () => {
         setTaskName(event.target.value);
     }
 
+    const removeTask = (taskForRemoving: Task) => {
+        setTasks(previousTasks => (
+            [...previousTasks.filter(task => task.name !== taskForRemoving.name)]
+        ))
+    }
+    const toggleReadiness = (taskForChange: Task) => {
+        setTasks(previousTasks => (
+            [...previousTasks.map((task) => (task !== taskForChange ? task : {...task, isDone: !task.isDone}))]
+        ))
+    }
+
     return (
         <>
             <div>
@@ -34,6 +45,8 @@ const App = () => {
                 />
                 <TasksList
                     tasks={tasks}
+                    removeTask={removeTask}
+                    toggleReadiness={toggleReadiness}
                 />
             </div>
         </>
