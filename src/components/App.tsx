@@ -1,57 +1,37 @@
 import * as React from 'react';
-import {useState} from "react";
 
+import {useReducer} from "react";
+import {Action, State, ContextState} from "../types/stateType";
+import {todoReducer} from "../reducers/todoReducer";
 import NewTask from "./NewTask";
 import TasksList from "./TasksList";
 
-import {TaskName, Task, Tasks} from "../types/taskType";
+export const initialState: State = {
+    newTask: '',
+    tasks: []
+}
 
+// <Partial> allows you to create the context without default values.
+export const ContextApp = React.createContext<Partial<ContextState>>({});
 
 const App:  React.FC = () => {
-    const [newTaskName, setTaskName] = useState<TaskName>('');
-    const [tasks, setTasks] = useState<Tasks>([]);
 
-    const addTask = (event: React.FormEvent<HTMLFormElement>, task: TaskName) => {
-        event.preventDefault();
-        setTasks([...tasks, {
-            name: task,
-            isDone: false
-        }]);
-        setTaskName('');
-    }
+    const [state, changeState] = useReducer<React.Reducer<State, Action>>(todoReducer, initialState);
 
-    const changeTask = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setTaskName(event.target.value);
-    }
-
-    const removeTask = (taskForRemoving: Task) => {
-        setTasks(previousTasks => (
-            [...previousTasks.filter(task => task.name !== taskForRemoving.name)]
-        ))
-    }
-    const toggleReadiness = (taskForChange: Task) => {
-        setTasks(previousTasks => (
-            [...previousTasks.map((task) => (task !== taskForChange ? task : {...task, isDone: !task.isDone}))]
-        ))
-    }
+    const ContextState: ContextState = {
+        state,
+        changeState
+    };
 
     return (
         <>
-            <div>
-                <h1>
-                    React + TypeScript
-                </h1>
-                <NewTask
-                    taskName={newTaskName}
-                    addTask={addTask}
-                    changeTask={changeTask}
-                />
-                <TasksList
-                    tasks={tasks}
-                    removeTask={removeTask}
-                    toggleReadiness={toggleReadiness}
-                />
-            </div>
+            <h1>
+                React + TypeScript
+            </h1>
+            <ContextApp.Provider value={ContextState}>
+                <NewTask />
+                <TasksList />
+            </ContextApp.Provider>
         </>
     )
 }

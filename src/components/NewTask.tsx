@@ -1,18 +1,28 @@
 import * as React from 'react';
+
+import {useContext} from "react";
+import {ContextApp} from "./App";
+
 import {TaskName} from "../types/taskType";
+import {ActionType} from "../types/stateType";
 
-export interface Props {
-    changeTask: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    addTask: (event: React.FormEvent<HTMLFormElement>, task: TaskName) => void;
-    taskName: TaskName;
-}
+const NewTask: React.FC = () => {
+    const {state, changeState} = useContext(ContextApp);
 
-const NewTask: React.FC<Props> = ({taskName, addTask, changeTask}) => {
+    const addTask = (event: React.FormEvent<HTMLFormElement>, task: TaskName) => {
+        event.preventDefault();
+        changeState({type: ActionType.Add, payload: task})
+        changeState({type: ActionType.Change, payload: ''})
+    }
+
+    const changeTask = (event: React.ChangeEvent<HTMLInputElement>) => {
+        changeState({type: ActionType.Change, payload: event.target.value})
+    }
+
     return (
         <>
-            <h1>Hello!</h1>
-            <form onSubmit={(event)=>addTask(event, taskName)}>
-                <input type='text' onChange={(event)=>changeTask(event)} value={taskName}/>
+            <form onSubmit={(event)=>addTask(event, state.newTask)}>
+                <input type='text' onChange={(event)=>changeTask(event)} value={state.newTask}/>
                 <button type="submit">Add a task</button>
             </form>
         </>
