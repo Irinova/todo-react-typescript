@@ -1,26 +1,32 @@
 import * as React from 'react';
 import {ContextApp} from "../components/App";
-
 import {shallow} from "enzyme";
-import {render} from "@testing-library/react";
+import {render, fireEvent } from "@testing-library/react";
 import {renderHook } from '@testing-library/react-hooks';
 
-import {useReducer} from "react";
+import {createContext, useReducer} from "react";
 import {todoReducer} from "../reducers/todoReducer";
 
 import NewTask from "../components/NewTask";
+import {State, ContextState} from "../types/stateType";
 
 describe('<NewTask />',() => {
 
-    const testState = {
+    const testState: State = {
         newTask: 'new task',
         tasks: []
     }
+
     const { result } = renderHook(()=> useReducer(todoReducer, testState));
     const [state, changeState] = result.current;
 
+    const ContextState: ContextState = {
+        state,
+        changeState
+    };
+
     const wrapper =
-        <ContextApp.Provider value={{state, changeState}}>
+        <ContextApp.Provider value={ContextState}>
             <NewTask/>
          </ContextApp.Provider>;
 
@@ -29,9 +35,13 @@ describe('<NewTask />',() => {
         expect(component).toMatchSnapshot();
     });
 
-    it('should render right input value', () => {
-        const {container} = render(wrapper);
+    it('should render right input value',  () => {
+        const {container } = render(wrapper);
         expect(container.querySelector('input').getAttribute('value')).toEqual(testState.newTask);
+        fireEvent.change(container.querySelector('input'), { target: { value: '23' } })
+        setTimeout(()=>{
+            expect(container.querySelector('input').getAttribute('value')).toEqual('');
+        },200)
     });
 
 })

@@ -9,10 +9,11 @@ import {useReducer} from "react";
 import {todoReducer} from "../reducers/todoReducer";
 
 import TasksList from "../components/TasksList";
+import {State} from "../types/stateType";
 
 describe('<TasksList />',() => {
 
-    const testState = {
+    const testState: State = {
         newTask: '',
         tasks: [{name: 'test', isDone: false}, {name: 'test2', isDone: false}]
     }
