@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ContextApp} from "../components/App";
 import {shallow} from "enzyme";
-import {render, fireEvent } from "@testing-library/react";
+import {render, fireEvent, wait } from "@testing-library/react";
 import {renderHook } from '@testing-library/react-hooks';
 
 import {createContext, useReducer} from "react";
@@ -35,13 +35,13 @@ describe('<NewTask />',() => {
         expect(component).toMatchSnapshot();
     });
 
-    it('should render right input value',  () => {
+    it('should render right input value',  async () => {
         const {container } = render(wrapper);
         expect(container.querySelector('input').getAttribute('value')).toEqual(testState.newTask);
         fireEvent.change(container.querySelector('input'), { target: { value: '23' } })
-        setTimeout(()=>{
+        await wait(() => {
             expect(container.querySelector('input').getAttribute('value')).toEqual('');
-        },200)
+        });
     });
 
 })
