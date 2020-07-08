@@ -8,13 +8,11 @@ import {ActionType} from "../types/stateType";
 
 const NewTask: React.FC = () => {
     const {state, changeState} = useContext(ContextApp);
-    const [text, setText] = useState('Add a task')
 
     const addTask = (event: React.FormEvent<HTMLFormElement>, task: TaskName) => {
         event.preventDefault();
         changeState({type: ActionType.Add, payload: task})
         changeState({type: ActionType.Change, payload: ''})
-        setText('New text')
     }
 
     const changeTask = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +23,7 @@ const NewTask: React.FC = () => {
         <>
             <form onSubmit={(event)=>addTask(event, state.newTask)}>
                 <input type='text' onChange={(event)=>changeTask(event)} value={state.newTask}/>
-                <button type="submit">{text}</button>
+                <button type="submit">Add a task</button>
             </form>
         </>
     )

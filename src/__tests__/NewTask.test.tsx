@@ -1,16 +1,18 @@
 import * as React from 'react';
 import {ContextApp} from "../components/App";
 import {shallow} from "enzyme";
-import {render, fireEvent, wait } from "@testing-library/react";
-import {renderHook } from '@testing-library/react-hooks';
+import {render, fireEvent, waitFor, cleanup } from "@testing-library/react";
+import {renderHook, act } from '@testing-library/react-hooks';
 
 import {createContext, useReducer} from "react";
 import {todoReducer} from "../reducers/todoReducer";
 
 import NewTask from "../components/NewTask";
-import {State, ContextState} from "../types/stateType";
+import {State, ContextState, ActionType} from "../types/stateType";
 
 describe('<NewTask />',() => {
+
+    afterEach(cleanup);
 
     const testState: State = {
         newTask: 'new task',
@@ -38,10 +40,6 @@ describe('<NewTask />',() => {
     it('should render right input value',  async () => {
         const {container } = render(wrapper);
         expect(container.querySelector('input').getAttribute('value')).toEqual(testState.newTask);
-        fireEvent.change(container.querySelector('input'), { target: { value: '23' } })
-        await wait(() => {
-            expect(container.querySelector('input').getAttribute('value')).toEqual('');
-        });
     });
 
 })
