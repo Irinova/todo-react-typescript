@@ -12,6 +12,14 @@ npm install
 npm start
 ```
 
+Итоговый результат:
+
+```
+git checkout ready
+```
+
+
+
 
 
 
