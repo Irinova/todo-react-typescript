@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<App /> hasn\`t got changes 1`] = `
+<Fragment>
+  <ContextProvider
+    value={
+      Object {
+        "changeState": [Function],
+        "state": Object {
+          "newTask": "",
+          "tasks": Array [],
+        },
+      }
+    }
+  >
+    <NewTask />
+    <TasksList />
+  </ContextProvider>
+</Fragment>
+`;
